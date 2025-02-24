@@ -14,7 +14,7 @@ export async function extractFigmaData({ fileId, ids, token, fileName }) {
 
     const nodeId = ids.replace("-", ":");
     const data = [responseData.nodes[nodeId].document];
-    console.log("**********",data)
+    console.log("**********", data);
 
     function getAllFrames(items) {
       let frames = [];
@@ -55,17 +55,16 @@ export async function extractFigmaData({ fileId, ids, token, fileName }) {
     const csvContent = extractedData
       .map((item) => `${item.id},${item.name},${item.width},${item.height}`)
       .join("\n");
-    
-    // Return response with CSV data
-    return new Response(csvHeader + csvContent, {
-      headers: {
-        'Content-Type': 'text/csv',
-        'Content-Disposition': `attachment; filename="${fileName}.csv"`
-      }
-    });
 
+    // Return response with properly encoded CSV data
+    return new Response(new TextEncoder().encode(csvHeader + csvContent), {
+      headers: {
+        "Content-Type": "text/csv; charset=utf-8",
+        "Content-Disposition": `attachment; filename="${fileName}.csv"`,
+      },
+    });
   } catch (error) {
-    console.error('Extraction error details:', error);
+    console.error("Extraction error details:", error);
     throw new Error(`Failed to process Figma data: ${error.message}`);
   }
 }

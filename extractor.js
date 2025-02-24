@@ -55,16 +55,10 @@ export async function extractFigmaData({ fileId, ids, token, fileName }) {
     const csvContent = extractedData
       .map((item) => `${item.id},${item.name},${item.width},${item.height}`)
       .join("\n");
+    const csvData = csvHeader + csvContent;
 
-    // Return response with properly encoded CSV data
-    return new Response(new TextEncoder().encode(csvHeader + csvContent), {
-      headers: {
-        "Content-Type": "text/csv; charset=utf-8",
-        "Content-Disposition": `attachment; filename="${fileName}.csv"`,
-      },
-    });
+    return csvData;
   } catch (error) {
-    console.error("Extraction error details:", error);
-    throw new Error(`Failed to process Figma data: ${error.message}`);
+    throw new Error(`Error extracting Ids: ${error.message}`);
   }
 }

@@ -1,5 +1,4 @@
 import fetch from "node-fetch";
-import { writeFile } from "fs/promises";
 
 export async function extractFigmaData({ fileId, ids, token, fileName }) {
   try {
@@ -63,9 +62,6 @@ export async function extractFigmaData({ fileId, ids, token, fileName }) {
       .map((item) => `${item.id},${item.name},${item.width},${item.height}`)
       .join("\n");
     const csvData = csvHeader + csvContent;
-
-    const csvFileName = `${largestFrame.name.replace(/[^a-zA-Z0-9]/g, "_")}.csv`;
-    await writeFile(csvFileName, csvData);
 
     return csvData;
   } catch (error) {

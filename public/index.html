@@ -26,6 +26,22 @@
                 <label for="fileName">File Name:</label>
                 <input type="text" id="fileName" required onchange="saveFormData()">
             </div>
+            <div class="form-group">
+                <label for="minWidth">Min Width:</label>
+                <input type="number" id="minWidth" required value="320" onchange="saveFormData()">
+            </div>
+            <div class="form-group">
+                <label for="maxWidth">Max Width:</label>
+                <input type="number" id="maxWidth" required value="480" onchange="saveFormData()">
+            </div>
+            <div class="form-group">
+                <label for="minHeight">Min Height:</label>
+                <input type="number" id="minHeight" required value="568" onchange="saveFormData()">
+            </div>
+            <div class="form-group">
+                <label for="maxHeight">Max Height:</label>
+                <input type="number" id="maxHeight" required value="1000" onchange="saveFormData()">
+            </div>
             <button type="submit">Extract Frames</button>
         </form>
         <div id="result"></div>

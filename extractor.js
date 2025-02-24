@@ -1,6 +1,6 @@
 import fetch from "node-fetch";
 
-export async function extractFigmaData({ fileId, ids, token, fileName }) {
+export async function extractFigmaData({ fileId, ids, token, fileName, dimensions }) {
   try {
     fileName = fileName.replace(" ", "-");
 
@@ -35,10 +35,10 @@ export async function extractFigmaData({ fileId, ids, token, fileName }) {
     let mobileFrames = allFrames.filter(
       (frame) =>
         frame.absoluteBoundingBox &&
-        frame.absoluteBoundingBox.width >= 320 &&
-        frame.absoluteBoundingBox.width <= 480 &&
-        frame.absoluteBoundingBox.height >= 568 &&
-        frame.absoluteBoundingBox.height <= 1000
+        frame.absoluteBoundingBox.width >= dimensions.minWidth &&
+        frame.absoluteBoundingBox.width <= dimensions.maxWidth &&
+        frame.absoluteBoundingBox.height >= dimensions.minHeight &&
+        frame.absoluteBoundingBox.height <= dimensions.maxHeight
     );
 
     const extractedData = mobileFrames.map((frame) => ({

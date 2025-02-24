@@ -19,9 +19,8 @@ app.get("/", (req, res) => {
 });
 
 app.post("/api/extract", async (req, res) => {
-  const { fileId, nodeIds, token, fileName } = req.body;
+  const { fileId, nodeIds, token, fileName, dimensions } = req.body;
   console.log("Received data:", { fileId, nodeIds, token, fileName, dimensions });
-
 
   try {
     const result = await extractFigmaData({
@@ -29,15 +28,23 @@ app.post("/api/extract", async (req, res) => {
       ids: nodeIds,
       token,
       fileName,
+      dimensions: {
+        minWidth: parseInt(dimensions.minWidth),
+        maxWidth: parseInt(dimensions.maxWidth),
+        minHeight: parseInt(dimensions.minHeight),
+        maxHeight: parseInt(dimensions.maxHeight)
+      }
     });
     
     res.setHeader('Content-Type', 'text/csv');
     res.setHeader('Content-Disposition', `attachment; filename=${fileName}.csv`);
     res.send(result);
   } catch (error) {
+    console.error('Detailed error:', error);
     res.status(500).json({ error: error.message });
   }
 });
+
 
 
 const PORT = process.env.PORT || 3000;

@@ -20,7 +20,7 @@ app.get("/", (req, res) => {
 
 app.post("/api/extract", async (req, res) => {
   const { fileId, nodeIds, token, fileName } = req.body;
-  console.log("Received data:", { fileId, nodeIds, token, fileName });
+  console.log("Received data:", { fileId, nodeIds, token, fileName, dimensions });
 
 
   try {

@@ -51,20 +51,15 @@ export async function extractFigmaData({ fileId, ids, token, fileName }) {
       height: frame.absoluteBoundingBox.height,
     }));
 
-    const largestFrame = mobileFrames.reduce((max, frame) => {
-      const currentArea = frame.absoluteBoundingBox.width * frame.absoluteBoundingBox.height;
-      const maxArea = max.absoluteBoundingBox.width * max.absoluteBoundingBox.height;
-      return currentArea > maxArea ? frame : max;
-    }, mobileFrames[0]);
-
     const csvHeader = "id,name,width,height\n";
     const csvContent = extractedData
       .map((item) => `${item.id},${item.name},${item.width},${item.height}`)
       .join("\n");
-    const csvData = csvHeader + csvContent;
+    
+    return csvHeader + csvContent;
 
-    return csvData;
   } catch (error) {
-    throw new Error(`Error extracting Ids: ${error.message}`);
+    console.error('Extraction error details:', error);
+    throw new Error(`Failed to process Figma data: ${error.message}`);
   }
 }

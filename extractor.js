@@ -56,7 +56,13 @@ export async function extractFigmaData({ fileId, ids, token, fileName }) {
       .map((item) => `${item.id},${item.name},${item.width},${item.height}`)
       .join("\n");
     
-    return csvHeader + csvContent;
+    // Return response with CSV data
+    return new Response(csvHeader + csvContent, {
+      headers: {
+        'Content-Type': 'text/csv',
+        'Content-Disposition': `attachment; filename="${fileName}.csv"`
+      }
+    });
 
   } catch (error) {
     console.error('Extraction error details:', error);

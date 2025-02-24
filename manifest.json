@@ -1,0 +1,11 @@
+
+{
+  "manifest_version": 3,
+  "name": "Figma Frame Extractor",
+  "version": "1.0",
+  "description": "Extract frame data from Figma files",
+  "permissions": ["activeTab"],
+  "action": {
+    "default_popup": "index.html"
+  }
+}
